@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
     <head>
         <meta charset="UTF-8">
         <title></title>
@@ -13,7 +12,8 @@
             <div class="container">
                 <simple-grid :data-list="gridData" :columns="gridColumns" 
                     v-on:load-entry="loadCustomer" 
-                    v-on:delete-entry="deleteCustomer"></simple-grid>
+                    v-on:delete-entry="deleteCustomer">
+                </simple-grid>
             </div>
             <div class="container">
                 <div class="form-group">
@@ -51,7 +51,6 @@
                     </div>
                 </div>
             </modal-dialog>
-
         </div>
 
         <template id="grid-template">
@@ -97,8 +96,6 @@
         <script src="/curd/js/vue.js"></script>
         <script src="/curd/js/vue-resource.js"></script>
         <script>
-
-
             Vue.component('simple-grid', {
                 template: '#grid-template',
                 props: ['dataList', 'columns'],
@@ -110,23 +107,26 @@
                             this.$dispatch('delete-entry', entry)
                     }
                 }
-            });
+            })
 
             Vue.component('modal-dialog', {
                 template: '#dialog-template',
                 props: ['show'],
                 methods: {
                     close: function() {
-                        this.show = false
+                            this.show = false
                     }
                 }
-            });
+            })
+        </script>
+        <script>
 
             var demo = new Vue({
-                el : '#app',
+                el: '#app',
                 data: {
                     show: false,
-                    gridColumns:[{
+                    title: '',
+                    gridColumns: [{
                         name: 'customerId',
                         isKey: true
                     }, {
@@ -141,19 +141,19 @@
                     item: {}
                 },
                 ready: function() {
-                    this.getCustomers();
+                    this.getCustomers()
                 },
                 methods: {
-                    // closeDialog: function() {
-                    //     this.show = false
-                    // },
-                    loadCustomer : function (customerId) {
-                        var vm = this;
+                    closeDialog: function() {
+                        this.show = false
+                    },
+                    loadCustomer: function(customerId) {
+                        var vm = this
                         vm.gridData.forEach(function(item) {
                             if (item.customerId === customerId) {
-                                vm.$set('item', item);
-                                vm.$set('show', true);
-                                return;
+                                vm.$set('item', item)
+                                vm.$set('show', true)
+                                return
                             }
                         })
                     },
@@ -162,13 +162,16 @@
                         this.show = false
                     },
                     getCustomers: function() {
-                        this.$http.get(this.apiUrl)
+
+                        var resource = this.$resource(this.apiUrl)
+                            vm = this
+
+                        resource.get()
                             .then((response) => {
-                                this.$set('gridData', response.data);
-                                console.log(response);
+                                    vm.$set('gridData', response.data)
                             })
                             .catch(function(response) {
-                                console.log(response);
+                                    console.log(response)
                             })
                     },
                     createCustomer: function() {
