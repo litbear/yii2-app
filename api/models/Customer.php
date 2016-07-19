@@ -7,10 +7,10 @@ use Yii;
 /**
  * This is the model class for table "{{%customer}}".
  *
- * @property integer $CustomerId
- * @property string $CompanyName
- * @property string $ContactName
- * @property string $Phone
+ * @property integer $customerId
+ * @property string $companyName
+ * @property string $contactName
+ * @property string $phone
  * @property integer $created_at
  * @property integer $updated_at
  */
@@ -23,6 +23,18 @@ class Customer extends \yii\db\ActiveRecord
     {
         return '{{%customer}}';
     }
+    
+    /**
+     * 
+     * @return type
+     */
+    public function behaviors() {
+        return [
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+            ],
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -30,12 +42,12 @@ class Customer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CompanyName', 'ContactName', 'Phone', 'created_at', 'updated_at'], 'required'],
+            [['companyName', 'contactName', 'phone'], 'required'],
             [['created_at', 'updated_at'], 'integer'],
-            [['CompanyName', 'ContactName', 'Phone'], 'string', 'max' => 255],
-            [['CompanyName'], 'unique'],
-            [['ContactName'], 'unique'],
-            [['Phone'], 'unique'],
+            [['companyName', 'contactName', 'phone'], 'string', 'max' => 255],
+            [['companyName'], 'unique'],
+            [['contactName'], 'unique'],
+            [['phone'], 'unique'],
         ];
     }
 
@@ -45,10 +57,10 @@ class Customer extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'CustomerId' => 'Customer ID',
-            'CompanyName' => 'Company Name',
-            'ContactName' => 'Contact Name',
-            'Phone' => 'Phone',
+            'customerId' => 'Customer ID',
+            'companyName' => 'Company Name',
+            'contactName' => 'Contact Name',
+            'phone' => 'Phone',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

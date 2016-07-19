@@ -13,17 +13,17 @@ class m160718_071401_customer extends Migration
         }
 
         $this->createTable('{{%customer}}', [
-            'CustomerId' => $this->primaryKey(),
-            'CompanyName' => $this->string()->notNull()->unique(),
-            'ContactName' => $this->string()->notNull()->unique(),
-            'Phone' => $this->string()->notNull()->unique(),
+            'customerId' => $this->primaryKey(),
+            'companyName' => $this->string()->notNull()->unique(),
+            'contactName' => $this->string()->notNull()->unique(),
+            'phone' => $this->string()->notNull()->unique(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
         $this->insert('{{%customer}}', [
-            'CompanyName' => 'CompanyOne',
-            'ContactName' => 'ContactNameOne',
-            'Phone' => '204-12345678',
+            'companyName' => 'CompanyOne',
+            'contactName' => 'ContactNameOne',
+            'phone' => '204-12345678',
             'created_at' => '0',
             'updated_at' => '0'
         ]);
