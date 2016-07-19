@@ -210,4 +210,8 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+    
+    public function actionCurd(){
+        return $this->renderPartial('curd/template');
+    }
 }
